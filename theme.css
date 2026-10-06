@@ -185,6 +185,13 @@ a,
 /* --------------------------------------------------------------------------
    5. Cards
    -------------------------------------------------------------------------- */
+/* Jellyfin sets `contain: content` on cards, whose paint containment clips
+   anything outside the card box. The image sits flush with the card's left
+   edge, so the hover ring/glow got cut off on that side. */
+.card {
+  contain: layout style !important;
+}
+
 .cardBox {
   transition: transform 0.35s var(--orchid-ease);
 }
