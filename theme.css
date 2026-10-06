@@ -1,0 +1,622 @@
+/* ==========================================================================
+   Orchid — a modern purple/pink theme for Jellyfin Web (10.10 / 10.11+)
+   https://github.com/Pocholo95/jellyfin-orchid-theme
+   License: MIT
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens — edit these to customize the theme
+   -------------------------------------------------------------------------- */
+:root {
+  /* Accents */
+  --orchid-purple: #a855f7;
+  --orchid-pink: #ec4899;
+  --orchid-accent: #c084fc;
+  --orchid-gradient: linear-gradient(135deg, var(--orchid-purple) 0%, var(--orchid-pink) 100%);
+  --orchid-glow: 0 8px 32px rgba(168, 85, 247, 0.35);
+
+  /* Surfaces */
+  --orchid-bg: #0d0a14;
+  --orchid-bg-2: #120e1b;
+  --orchid-surface: rgba(30, 22, 44, 0.72);
+  --orchid-surface-solid: #1a1426;
+  --orchid-surface-hover: rgba(48, 34, 70, 0.85);
+  --orchid-border: rgba(192, 132, 252, 0.14);
+
+  /* Text */
+  --orchid-text: #f3eefc;
+  --orchid-text-muted: #a99cc0;
+
+  /* Shape */
+  --orchid-radius: 14px;
+  --orchid-radius-sm: 10px;
+  --orchid-blur: 18px;
+  --orchid-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Base
+   -------------------------------------------------------------------------- */
+html,
+body,
+.backgroundContainer,
+.dialog,
+.layout-desktop .mainAnimatedPage,
+.skinBody {
+  background-color: var(--orchid-bg) !important;
+  color: var(--orchid-text);
+}
+
+.backgroundContainer:not(.withBackdrop) {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(168, 85, 247, 0.16), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgba(236, 72, 153, 0.12), transparent 60%),
+    var(--orchid-bg) !important;
+}
+
+.backgroundContainer.withBackdrop {
+  background-color: rgba(13, 10, 20, 0.86) !important;
+}
+
+::selection {
+  background: rgba(236, 72, 153, 0.45);
+  color: #fff;
+}
+
+a,
+.button-link {
+  color: var(--orchid-accent);
+}
+
+.secondaryText,
+.fieldDescription,
+.cardText-secondary,
+.listItemBodyText.secondary {
+  color: var(--orchid-text-muted) !important;
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(192, 132, 252, 0.35) transparent;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(192, 132, 252, 0.3);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background-color: rgba(236, 72, 153, 0.55); }
+
+/* --------------------------------------------------------------------------
+   3. Header & navigation
+   -------------------------------------------------------------------------- */
+.skinHeader,
+.skinHeader.semiTransparent,
+.skinHeader-withBackground {
+  background: rgba(13, 10, 20, 0.6) !important;
+  backdrop-filter: blur(var(--orchid-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--orchid-blur)) saturate(140%);
+  border-bottom: 1px solid var(--orchid-border);
+  box-shadow: none !important;
+}
+
+.skinHeader.semiTransparent.noHeaderRight,
+.skinHeader.osdHeader {
+  border-bottom: none;
+}
+
+.pageTitle {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* Header tabs (Home / Favorites, Movies / Suggestions …) */
+.emby-tab-button {
+  color: var(--orchid-text-muted) !important;
+  border-radius: 999px;
+  padding: 0.55em 1.1em !important;
+  margin: 0 0.15em;
+  transition: color 0.2s, background 0.2s;
+}
+.emby-tab-button:hover {
+  color: var(--orchid-text) !important;
+  background: rgba(192, 132, 252, 0.1);
+}
+.emby-tab-button-active,
+.emby-tab-button.emby-button-foreground {
+  color: #fff !important;
+  background: var(--orchid-gradient) !important;
+  box-shadow: var(--orchid-glow);
+}
+.emby-tab-button-selection-bar { display: none; }
+
+/* Side drawer */
+.mainDrawer,
+.drawer-open .mainDrawer {
+  background: var(--orchid-bg-2) !important;
+  border-right: 1px solid var(--orchid-border);
+}
+.navMenuOption {
+  border-radius: var(--orchid-radius-sm);
+  margin: 2px 10px;
+  transition: background 0.2s;
+}
+.navMenuOption:hover {
+  background: rgba(192, 132, 252, 0.1) !important;
+}
+.navMenuOption-selected {
+  background: linear-gradient(90deg, rgba(168, 85, 247, 0.28), rgba(236, 72, 153, 0.12)) !important;
+  color: #fff !important;
+  box-shadow: inset 3px 0 0 var(--orchid-pink);
+}
+.navMenuOption-selected .navMenuOptionIcon {
+  color: var(--orchid-pink);
+}
+.sidebarHeader {
+  color: var(--orchid-accent) !important;
+  text-transform: uppercase;
+  font-size: 0.75em;
+  letter-spacing: 1.2px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Section titles
+   -------------------------------------------------------------------------- */
+.sectionTitle,
+.sectionTitle-cards {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.sectionTitleContainer .sectionTitleTextButton:hover .sectionTitle,
+.sectionTitleContainer a.sectionTitleTextButton:hover {
+  color: var(--orchid-accent) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. Cards
+   -------------------------------------------------------------------------- */
+.cardBox {
+  transition: transform 0.35s var(--orchid-ease);
+}
+
+.cardScalable,
+.cardImageContainer,
+.cardContent,
+.cardOverlayContainer,
+.cardPadder {
+  border-radius: var(--orchid-radius) !important;
+}
+
+.cardScalable {
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  transition: box-shadow 0.35s var(--orchid-ease);
+}
+
+.cardImageContainer.defaultCardBackground,
+.defaultCardBackground {
+  background: var(--orchid-surface-solid) !important;
+}
+
+@media (hover: hover) {
+  .card:hover .cardBox,
+  .card:focus .cardBox {
+    transform: translateY(-4px);
+  }
+  .card:hover .cardScalable,
+  .card:focus .cardScalable {
+    box-shadow:
+      0 0 0 2px rgba(236, 72, 153, 0.75),
+      0 14px 34px rgba(168, 85, 247, 0.35);
+  }
+}
+
+/* Remove the default focus border (TV / keyboard) and replace it */
+.cardBox-focustransform,
+.card:focus .cardBox.visualCardBox,
+.card:focus .cardScalable {
+  border: none !important;
+}
+
+.cardOverlayContainer {
+  background: linear-gradient(180deg, transparent 40%, rgba(13, 10, 20, 0.85)) !important;
+}
+
+.cardOverlayButton:hover {
+  background: var(--orchid-gradient) !important;
+}
+
+.cardText {
+  color: var(--orchid-text);
+}
+
+/* Visual cards (list cards with background) */
+.visualCardBox {
+  background: var(--orchid-surface) !important;
+  border: 1px solid var(--orchid-border);
+  border-radius: var(--orchid-radius) !important;
+}
+
+/* Indicators */
+.countIndicator,
+.playedIndicator,
+.indicator {
+  background: var(--orchid-gradient) !important;
+  box-shadow: 0 2px 10px rgba(236, 72, 153, 0.45);
+}
+
+/* Progress bars */
+.itemProgressBar {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.itemProgressBarForeground {
+  background: var(--orchid-gradient) !important;
+  border-radius: 999px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Buttons
+   -------------------------------------------------------------------------- */
+.emby-button,
+.raised,
+.fab {
+  border-radius: 999px !important;
+  transition: transform 0.15s, box-shadow 0.25s, background 0.25s;
+}
+
+.raised:not(.button-submit):not(.button-delete) {
+  background: var(--orchid-surface) !important;
+  color: var(--orchid-text) !important;
+  border: 1px solid var(--orchid-border);
+}
+.raised:not(.button-submit):not(.button-delete):hover {
+  background: var(--orchid-surface-hover) !important;
+}
+
+.button-submit,
+.emby-button.button-submit,
+.fab,
+.btnPlay.detailButton {
+  background: var(--orchid-gradient) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: var(--orchid-glow);
+}
+.button-submit:hover,
+.fab:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 36px rgba(236, 72, 153, 0.45);
+}
+.button-submit:active,
+.fab:active {
+  transform: translateY(0);
+}
+
+.button-delete {
+  background: #e11d48 !important;
+  color: #fff !important;
+}
+
+.paper-icon-button-light:hover:not(:disabled) {
+  color: var(--orchid-pink) !important;
+  background-color: rgba(236, 72, 153, 0.12) !important;
+}
+
+.emby-button.show-focus:focus,
+.paper-icon-button-light.show-focus:focus {
+  background: rgba(168, 85, 247, 0.25) !important;
+  color: #fff !important;
+}
+
+/* --------------------------------------------------------------------------
+   7. Item details page
+   -------------------------------------------------------------------------- */
+.detailPagePrimaryContainer,
+.detailPageSecondaryContainer {
+  background: transparent !important;
+}
+
+.layout-desktop .detailRibbon,
+.detailRibbon {
+  background: linear-gradient(180deg, rgba(13, 10, 20, 0) 0%, rgba(13, 10, 20, 0.92) 55%) !important;
+}
+
+.itemBackdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, var(--orchid-bg) 100%);
+  pointer-events: none;
+}
+
+.detailButton {
+  border-radius: 999px !important;
+}
+.detailButton:not(.btnPlay) {
+  background: var(--orchid-surface) !important;
+  border: 1px solid var(--orchid-border) !important;
+}
+.detailButton:not(.btnPlay):hover {
+  background: var(--orchid-surface-hover) !important;
+  color: var(--orchid-pink) !important;
+}
+.detailButton-content .material-icons {
+  font-size: 1.6em;
+}
+
+.itemName.infoText,
+.parentNameLast {
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.mediaInfoOfficialRating,
+.mediaInfoCriticRating,
+.mediaInfoItem.mediaInfoText {
+  border-radius: 6px;
+}
+.mediaInfoOfficialRating {
+  border-color: var(--orchid-accent) !important;
+  color: var(--orchid-accent) !important;
+}
+
+.starIcon {
+  color: #f9a8d4 !important;
+}
+
+.genres a,
+.itemGenres a,
+.itemMiscInfo a {
+  color: var(--orchid-accent);
+}
+
+/* People (cast) cards: round avatars */
+#castContent .cardScalable,
+#castContent .cardImageContainer,
+.peopleSection .cardScalable,
+.peopleSection .cardImageContainer {
+  border-radius: 50% !important;
+}
+
+/* --------------------------------------------------------------------------
+   8. Forms
+   -------------------------------------------------------------------------- */
+.emby-input,
+.emby-textarea,
+.emby-select-withcolor,
+.emby-select,
+.inputContainer input,
+.selectContainer select {
+  background: var(--orchid-surface-solid) !important;
+  color: var(--orchid-text) !important;
+  border: 1px solid var(--orchid-border) !important;
+  border-radius: var(--orchid-radius-sm) !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.emby-input:focus,
+.emby-textarea:focus,
+.emby-select-withcolor:focus,
+.emby-select:focus {
+  border-color: var(--orchid-purple) !important;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.25) !important;
+  outline: none;
+}
+
+.inputLabelFocused,
+.selectLabelFocused,
+.textareaLabelFocused {
+  color: var(--orchid-accent) !important;
+}
+
+/* Checkboxes */
+.emby-checkbox:checked + span + .checkboxOutline,
+.emby-checkbox:checked + .checkboxOutline {
+  background: var(--orchid-gradient) !important;
+  border-color: transparent !important;
+}
+.emby-checkbox:focus + span + .checkboxOutline {
+  border-color: var(--orchid-pink) !important;
+}
+
+/* Toggle switches */
+.mdl-switch.is-checked .mdl-switch__track {
+  background: rgba(236, 72, 153, 0.5) !important;
+}
+.mdl-switch.is-checked .mdl-switch__thumb {
+  background: var(--orchid-pink) !important;
+}
+
+/* Radio */
+.mdl-radio__inner-circle {
+  background: var(--orchid-pink) !important;
+}
+.mdl-radio.is-checked .mdl-radio__outer-circle {
+  border-color: var(--orchid-pink) !important;
+}
+
+/* Collapsible sections (settings) */
+.emby-collapsible-button {
+  border-radius: var(--orchid-radius-sm) !important;
+}
+
+/* --------------------------------------------------------------------------
+   9. Lists, dialogs, menus, toasts
+   -------------------------------------------------------------------------- */
+.listItem {
+  border-radius: var(--orchid-radius-sm);
+  transition: background 0.2s;
+}
+.listItem:hover,
+.listItem.show-focus:focus {
+  background: rgba(192, 132, 252, 0.08) !important;
+}
+
+.paperList,
+.verticalSection-extrabottompadding .paperList {
+  background: var(--orchid-surface) !important;
+  border: 1px solid var(--orchid-border);
+  border-radius: var(--orchid-radius) !important;
+  overflow: hidden;
+}
+
+.dialog,
+.formDialog,
+.actionSheet,
+.focuscontainer.dialog {
+  background: var(--orchid-surface-solid) !important;
+  border: 1px solid var(--orchid-border);
+  border-radius: var(--orchid-radius) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+}
+.dialog.dialog-fullscreen-lowres,
+.dialog-fullscreen {
+  border-radius: 0 !important;
+}
+.formDialogHeader,
+.formDialogFooter {
+  background: transparent !important;
+  border-color: var(--orchid-border) !important;
+}
+.dialogBackdropOpened {
+  background: rgba(8, 5, 14, 0.7) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.actionSheetMenuItem {
+  border-radius: var(--orchid-radius-sm);
+}
+.actionSheetMenuItem:hover {
+  background: rgba(192, 132, 252, 0.12) !important;
+}
+
+.toast {
+  background: var(--orchid-surface-solid) !important;
+  color: var(--orchid-text) !important;
+  border: 1px solid var(--orchid-border);
+  border-left: 3px solid var(--orchid-pink);
+  border-radius: var(--orchid-radius-sm) !important;
+}
+
+/* Alphabet picker */
+.alphaPickerButton-selected,
+.alphaPickerButton:hover {
+  color: var(--orchid-pink) !important;
+  background: transparent !important;
+}
+
+/* --------------------------------------------------------------------------
+   10. Player (OSD) & now-playing bar
+   -------------------------------------------------------------------------- */
+.nowPlayingBar {
+  background: rgba(18, 14, 27, 0.82) !important;
+  backdrop-filter: blur(var(--orchid-blur));
+  -webkit-backdrop-filter: blur(var(--orchid-blur));
+  border-top: 1px solid var(--orchid-border);
+}
+
+.videoOsdBottom {
+  background: linear-gradient(0deg, rgba(13, 10, 20, 0.92) 0%, transparent 100%) !important;
+}
+
+/* Sliders */
+.mdl-slider-background-lower,
+.mdl-slider-background-lower-clear {
+  background: var(--orchid-gradient) !important;
+}
+.mdl-slider-background-upper {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+.mdl-slider::-webkit-slider-thumb {
+  background: #fff !important;
+  box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.45);
+}
+.mdl-slider::-moz-range-thumb {
+  background: #fff !important;
+  box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.45);
+}
+.sliderBubble {
+  background: var(--orchid-surface-solid) !important;
+  border: 1px solid var(--orchid-border);
+  border-radius: var(--orchid-radius-sm);
+}
+
+/* Up-next / skip intro buttons */
+.upNextDialog,
+.skip-button {
+  background: var(--orchid-surface) !important;
+  border: 1px solid var(--orchid-border) !important;
+  border-radius: var(--orchid-radius) !important;
+  backdrop-filter: blur(var(--orchid-blur));
+  -webkit-backdrop-filter: blur(var(--orchid-blur));
+}
+
+/* --------------------------------------------------------------------------
+   11. Login & user selection
+   -------------------------------------------------------------------------- */
+#loginPage .padded-left.padded-right,
+#loginPage .manualLoginForm {
+  background: var(--orchid-surface);
+  border: 1px solid var(--orchid-border);
+  border-radius: calc(var(--orchid-radius) + 6px);
+  backdrop-filter: blur(var(--orchid-blur));
+  -webkit-backdrop-filter: blur(var(--orchid-blur));
+  padding: 2em !important;
+  max-width: 28em;
+  margin: 2em auto;
+}
+
+#loginPage .cardScalable,
+#loginPage .cardImageContainer {
+  border-radius: 50% !important;
+}
+
+#loginPage h1 {
+  background: var(--orchid-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   12. Admin dashboard (legacy pages)
+   -------------------------------------------------------------------------- */
+.dashboardDocument .mainDrawer,
+.dashboardDocument .skinBody {
+  background-color: var(--orchid-bg) !important;
+}
+.dashboardSection .paperList,
+.activeSession {
+  background: var(--orchid-surface) !important;
+  border-radius: var(--orchid-radius) !important;
+}
+.sessionCardFooter {
+  background: transparent !important;
+}
+.backgroundProgress,
+.playbackProgress {
+  background: var(--orchid-gradient) !important;
+}
+
+/* --------------------------------------------------------------------------
+   13. Accessibility — respect reduced motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  .card:hover .cardBox,
+  .card:focus .cardBox {
+    transform: none !important;
+  }
+}
