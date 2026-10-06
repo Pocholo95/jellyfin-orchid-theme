@@ -23,10 +23,10 @@ Probado en **Jellyfin 12.1**.
 Pega esta línea y guarda:
 
 ```css
-@import url("https://cdn.jsdelivr.net/gh/Pocholo95/jellyfin-orchid-theme@v1.1.0/theme.css");
+@import url("https://cdn.jsdelivr.net/gh/Pocholo95/jellyfin-orchid-theme@v1.1.1/theme.css");
 ```
 
-Para actualizar, cambia `v1.1.0` por la última versión de [Releases/Tags](https://github.com/Pocholo95/jellyfin-orchid-theme/tags).
+Para actualizar, cambia `v1.1.1` por la última versión de [Releases/Tags](https://github.com/Pocholo95/jellyfin-orchid-theme/tags).
 
 > Evita `@main`: los navegadores guardan ese archivo en caché hasta 7 días, así que los cambios tardarían en verse en cada dispositivo.
 
