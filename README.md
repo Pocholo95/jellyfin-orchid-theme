@@ -2,7 +2,7 @@
 
 Tema moderno y limpio para Jellyfin Web con acentos en degradado **morado → rosa**, superficies con efecto vidrio (glassmorphism), esquinas redondeadas y animaciones suaves.
 
-Probado contra la estructura de Jellyfin Web **10.10 / 10.11+**.
+Probado en **Jellyfin 12.1**.
 
 ## Paleta
 
