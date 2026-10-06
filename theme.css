@@ -154,17 +154,10 @@ a,
   border-right: 1px solid var(--orchid-border);
 }
 .navMenuOption {
-  border-radius: var(--orchid-radius-sm);
   margin: 2px 10px;
-  transition: background 0.2s;
-}
-.navMenuOption:hover {
-  background: rgba(192, 132, 252, 0.1) !important;
 }
 .navMenuOption-selected {
-  background: linear-gradient(90deg, rgba(168, 85, 247, 0.28), rgba(236, 72, 153, 0.12)) !important;
   color: #fff !important;
-  box-shadow: inset 3px 0 0 var(--orchid-pink);
 }
 .navMenuOption-selected .navMenuOptionIcon {
   color: var(--orchid-pink);
@@ -481,18 +474,6 @@ a,
 /* --------------------------------------------------------------------------
    9. Lists, dialogs, menus, toasts
    -------------------------------------------------------------------------- */
-.listItem {
-  transition: background 0.2s;
-}
-/* Bordered list items keep square corners so the divider line stays straight */
-.listItem:not(.listItem-border) {
-  border-radius: var(--orchid-radius-sm);
-}
-.listItem:hover,
-.listItem.show-focus:focus {
-  background: rgba(192, 132, 252, 0.08) !important;
-}
-
 .paperList,
 .verticalSection-extrabottompadding .paperList {
   background: var(--orchid-surface) !important;
@@ -523,13 +504,6 @@ a,
   background: rgba(8, 5, 14, 0.7) !important;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-}
-
-.actionSheetMenuItem {
-  border-radius: var(--orchid-radius-sm);
-}
-.actionSheetMenuItem:hover {
-  background: rgba(192, 132, 252, 0.12) !important;
 }
 
 .toast {
@@ -775,16 +749,7 @@ a,
 }
 .MuiMenuItem-root,
 .MuiListItemButton-root {
-  border-radius: var(--orchid-radius-sm);
   margin: 0 6px;
-}
-.MuiMenuItem-root:hover,
-.MuiListItemButton-root:hover {
-  background-color: rgba(192, 132, 252, 0.1) !important;
-}
-.MuiMenuItem-root.Mui-selected,
-.MuiListItemButton-root.Mui-selected {
-  background: linear-gradient(90deg, rgba(168, 85, 247, 0.28), rgba(236, 72, 153, 0.12)) !important;
 }
 .MuiDivider-root {
   border-color: var(--orchid-border) !important;
@@ -797,7 +762,52 @@ a,
 }
 
 /* --------------------------------------------------------------------------
-   14. Accessibility — respect reduced motion
+   14. Rows — one hover/selected style for every menu and list
+   Hover: soft tint + pink bar on the left. Selected: gradient + solid bar.
+   -------------------------------------------------------------------------- */
+.navMenuOption,
+.listItem,
+.actionSheetMenuItem,
+.MuiMenuItem-root,
+.MuiListItemButton-root {
+  border-radius: 4px var(--orchid-radius-sm) var(--orchid-radius-sm) 4px !important;
+  transition: background-color 0.2s, box-shadow 0.2s !important;
+}
+/* Bordered list items keep square corners so the divider line stays straight */
+.listItem-border,
+.listItem-border .listItem {
+  border-radius: 0 !important;
+}
+
+.navMenuOption:hover,
+.listItem:hover,
+.listItem.show-focus:focus,
+.actionSheetMenuItem:hover,
+.actionSheetMenuItem:focus-visible,
+.MuiMenuItem-root:hover,
+.MuiMenuItem-root.Mui-focusVisible,
+.MuiListItemButton-root:hover,
+.MuiListItemButton-root.Mui-focusVisible {
+  background: rgba(192, 132, 252, 0.1) !important;
+  box-shadow: inset 3px 0 0 rgba(236, 72, 153, 0.75) !important;
+}
+
+.navMenuOption-selected,
+.navMenuOption-selected:hover,
+.MuiMenuItem-root.Mui-selected,
+.MuiListItemButton-root.Mui-selected {
+  background: linear-gradient(90deg, rgba(168, 85, 247, 0.28), rgba(236, 72, 153, 0.12)) !important;
+  box-shadow: inset 3px 0 0 var(--orchid-pink) !important;
+}
+
+/* Keep highlighted menu rows off the menu's rounded edge */
+.actionSheetMenuItem {
+  width: calc(100% - 12px) !important;
+  margin: 1px 6px !important;
+}
+
+/* --------------------------------------------------------------------------
+   15. Accessibility — respect reduced motion
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,
