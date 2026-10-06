@@ -23,10 +23,10 @@ Probado en **Jellyfin 12.1**.
 Pega esta línea y guarda:
 
 ```css
-@import url("https://cdn.jsdelivr.net/gh/Pocholo95/jellyfin-orchid-theme@v1.1.2/theme.css");
+@import url("https://cdn.jsdelivr.net/gh/Pocholo95/jellyfin-orchid-theme@v1.2.0/theme.css");
 ```
 
-Para actualizar, cambia `v1.1.2` por la última versión de [Releases/Tags](https://github.com/Pocholo95/jellyfin-orchid-theme/tags).
+Para actualizar, cambia `v1.2.0` por la última versión de [Releases/Tags](https://github.com/Pocholo95/jellyfin-orchid-theme/tags).
 
 > Evita `@main`: los navegadores guardan ese archivo en caché hasta 7 días, así que los cambios tardarían en verse en cada dispositivo.
 
@@ -59,7 +59,8 @@ Todas las variables están al principio de `theme.css`, en la sección **Tokens*
 - Barras de progreso, sliders del reproductor, checkboxes y switches con los colores del tema
 - Diálogos, menús y toasts con el estilo del tema
 - Hover uniforme en menús y listas: tinte suave + barra rosa a la izquierda
-- Avatares redondos en el reparto y en el login
+- Fondo de la serie/película a pantalla completa, fijo al hacer scroll, con blur suave (`--orchid-backdrop-blur`)
+- Avatares redondos en el login
 - Pantalla de login con tarjeta de vidrio
 - Respeta `prefers-reduced-motion`
 
