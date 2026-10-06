@@ -37,25 +37,32 @@
 /* --------------------------------------------------------------------------
    2. Base
    -------------------------------------------------------------------------- */
-html,
-body,
-.backgroundContainer,
-.dialog,
-.layout-desktop .mainAnimatedPage,
-.skinBody {
-  background-color: var(--orchid-bg) !important;
+/* Only paint the root: pages, body and the video player must stay transparent
+   or they cover backdrops and the <video> element. */
+html {
+  background-color: var(--orchid-bg);
+}
+html.transparentDocument,
+html.transparentDocument body {
+  background: transparent !important;
+}
+body {
   color: var(--orchid-text);
 }
 
-.backgroundContainer:not(.withBackdrop) {
+.backgroundContainer:not(.withBackdrop):not(.backgroundContainer-transparent) {
   background:
     radial-gradient(1200px 600px at 10% -10%, rgba(168, 85, 247, 0.16), transparent 60%),
     radial-gradient(900px 500px at 110% 10%, rgba(236, 72, 153, 0.12), transparent 60%),
     var(--orchid-bg) !important;
 }
 
-.backgroundContainer.withBackdrop {
+.backgroundContainer.withBackdrop:not(.backgroundContainer-transparent) {
   background-color: rgba(13, 10, 20, 0.86) !important;
+}
+
+.detailPageWrapperContainer {
+  background-color: var(--orchid-bg) !important;
 }
 
 ::selection {
@@ -103,8 +110,15 @@ a,
   box-shadow: none !important;
 }
 
-.skinHeader.semiTransparent.noHeaderRight,
+.skinHeader.semiTransparent.noHeaderRight {
+  border-bottom: none;
+}
+
+/* Video player header: plain fade over the video, no glass */
 .skinHeader.osdHeader {
+  background: linear-gradient(180deg, rgba(13, 10, 20, 0.85) 0%, transparent 100%) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-bottom: none;
 }
 
@@ -197,7 +211,8 @@ a,
 }
 
 .cardImageContainer.defaultCardBackground,
-.defaultCardBackground {
+.defaultCardBackground,
+.cardPadder {
   background: var(--orchid-surface-solid) !important;
 }
 
@@ -225,8 +240,26 @@ a,
   background: linear-gradient(180deg, transparent 40%, rgba(13, 10, 20, 0.85)) !important;
 }
 
+/* Small overlay buttons (played, favorite, more) */
 .cardOverlayButton:hover {
+  color: var(--orchid-pink) !important;
+  background: rgba(236, 72, 153, 0.18) !important;
+}
+
+/* Big centered play button: tint the icon, never fill the whole area */
+.cardOverlayFab-primary,
+.cardOverlayFab-primary:hover {
+  background: transparent !important;
+}
+.cardOverlayFab-primary .cardOverlayButtonIcon {
   background: var(--orchid-gradient) !important;
+  color: #fff !important;
+  border-radius: 50%;
+  box-shadow: var(--orchid-glow);
+  transition: transform 0.2s var(--orchid-ease);
+}
+.cardOverlayFab-primary:hover .cardOverlayButtonIcon {
+  transform: scale(1.08);
 }
 
 .cardText {
@@ -449,8 +482,11 @@ a,
    9. Lists, dialogs, menus, toasts
    -------------------------------------------------------------------------- */
 .listItem {
-  border-radius: var(--orchid-radius-sm);
   transition: background 0.2s;
+}
+/* Bordered list items keep square corners so the divider line stays straight */
+.listItem:not(.listItem-border) {
+  border-radius: var(--orchid-radius-sm);
 }
 .listItem:hover,
 .listItem.show-focus:focus {
@@ -560,7 +596,6 @@ a,
 /* --------------------------------------------------------------------------
    11. Login & user selection
    -------------------------------------------------------------------------- */
-#loginPage .padded-left.padded-right,
 #loginPage .manualLoginForm {
   background: var(--orchid-surface);
   border: 1px solid var(--orchid-border);
@@ -606,7 +641,163 @@ a,
 }
 
 /* --------------------------------------------------------------------------
-   13. Accessibility — respect reduced motion
+   13. MUI components (Jellyfin 12 header, toolbars, settings, menus)
+   MUI hardcodes its primary blue (#00a4dc), so each component is overridden.
+   -------------------------------------------------------------------------- */
+
+/* Header nav: active library link */
+.MuiAppBar-root .MuiButton-textPrimary {
+  color: #fff !important;
+  background: var(--orchid-gradient) !important;
+  border-radius: 999px !important;
+  box-shadow: var(--orchid-glow);
+}
+.MuiAppBar-root .MuiButton-root {
+  border-radius: 999px !important;
+}
+
+.MuiAvatar-root {
+  background: var(--orchid-gradient) !important;
+  color: #fff !important;
+}
+
+/* Buttons */
+.MuiButton-containedPrimary {
+  background: var(--orchid-gradient) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.MuiButton-containedPrimary:hover {
+  filter: brightness(1.1);
+}
+.MuiButtonGroup-root {
+  border-radius: 999px !important;
+  overflow: hidden;
+  box-shadow: var(--orchid-glow) !important;
+}
+.MuiButtonGroup-grouped {
+  border-radius: 0 !important;
+}
+.MuiButtonGroup-grouped:not(:last-of-type) {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+.MuiButton-textPrimary,
+.MuiButton-outlinedPrimary,
+.MuiIconButton-colorPrimary,
+.MuiLink-root,
+.MuiTypography-colorPrimary {
+  color: var(--orchid-accent) !important;
+}
+.MuiButton-outlinedPrimary {
+  border-color: rgba(192, 132, 252, 0.5) !important;
+}
+.MuiLink-root {
+  text-decoration-color: rgba(192, 132, 252, 0.5) !important;
+}
+
+/* Loading indicators */
+.MuiCircularProgress-root {
+  color: var(--orchid-pink) !important;
+}
+.MuiLinearProgress-root {
+  background-color: rgba(192, 132, 252, 0.2) !important;
+}
+.MuiLinearProgress-bar {
+  background: var(--orchid-gradient) !important;
+}
+
+/* Inputs */
+.MuiFilledInput-root {
+  background-color: var(--orchid-surface-solid) !important;
+  border-radius: var(--orchid-radius-sm) var(--orchid-radius-sm) 0 0 !important;
+}
+.MuiFilledInput-root:hover {
+  background-color: #221a31 !important;
+}
+.MuiFilledInput-underline::after,
+.MuiInput-underline::after {
+  border-bottom-color: var(--orchid-pink) !important;
+}
+.MuiFilledInput-underline::before {
+  border-bottom-color: var(--orchid-border) !important;
+}
+.MuiOutlinedInput-root {
+  border-radius: var(--orchid-radius-sm) !important;
+}
+.MuiOutlinedInput-notchedOutline {
+  border-color: var(--orchid-border) !important;
+}
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--orchid-purple) !important;
+}
+.MuiFormLabel-root.Mui-focused,
+.MuiInputLabel-root.Mui-focused {
+  color: var(--orchid-accent) !important;
+}
+
+/* Checkboxes, radios, switches, sliders */
+.MuiCheckbox-root.Mui-checked,
+.MuiCheckbox-root.MuiCheckbox-indeterminate,
+.MuiRadio-root.Mui-checked,
+.MuiSwitch-switchBase.Mui-checked {
+  color: var(--orchid-pink) !important;
+}
+.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+  background-color: var(--orchid-pink) !important;
+}
+.MuiSlider-root {
+  color: var(--orchid-pink) !important;
+}
+
+/* Tabs */
+.MuiTab-root.Mui-selected {
+  color: var(--orchid-accent) !important;
+}
+.MuiTabs-indicator {
+  background: var(--orchid-gradient) !important;
+}
+
+/* Menus, popovers, dialogs, drawers */
+.MuiMenu-paper,
+.MuiPopover-paper,
+.MuiDialog-paper,
+.MuiAutocomplete-paper {
+  background: var(--orchid-surface-solid) !important;
+  background-image: none !important;
+  border: 1px solid var(--orchid-border);
+  border-radius: var(--orchid-radius) !important;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55) !important;
+}
+.MuiDrawer-paper {
+  background: var(--orchid-bg-2) !important;
+  background-image: none !important;
+  border-right: 1px solid var(--orchid-border) !important;
+}
+.MuiMenuItem-root,
+.MuiListItemButton-root {
+  border-radius: var(--orchid-radius-sm);
+  margin: 0 6px;
+}
+.MuiMenuItem-root:hover,
+.MuiListItemButton-root:hover {
+  background-color: rgba(192, 132, 252, 0.1) !important;
+}
+.MuiMenuItem-root.Mui-selected,
+.MuiListItemButton-root.Mui-selected {
+  background: linear-gradient(90deg, rgba(168, 85, 247, 0.28), rgba(236, 72, 153, 0.12)) !important;
+}
+.MuiDivider-root {
+  border-color: var(--orchid-border) !important;
+}
+
+.MuiChip-colorPrimary,
+.MuiBadge-colorPrimary {
+  background: var(--orchid-gradient) !important;
+  color: #fff !important;
+}
+
+/* --------------------------------------------------------------------------
+   14. Accessibility — respect reduced motion
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,
