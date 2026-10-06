@@ -18,15 +18,17 @@ Probado en **Jellyfin 12.1**.
 
 **Dashboard → General → Custom CSS code**
 
-### Opción A: importar desde GitHub (se actualiza solo)
+### Opción A: importar desde GitHub
 
 Pega esta línea y guarda:
 
 ```css
-@import url("https://cdn.jsdelivr.net/gh/Pocholo95/jellyfin-orchid-theme@main/theme.css");
+@import url("https://cdn.jsdelivr.net/gh/Pocholo95/jellyfin-orchid-theme@v1.0.0/theme.css");
 ```
 
-> Para fijar una versión concreta usa un tag, p. ej. `@v1.0.0` en lugar de `@main`.
+Para actualizar, cambia `v1.0.0` por la última versión de [Releases/Tags](https://github.com/Pocholo95/jellyfin-orchid-theme/tags).
+
+> Evita `@main`: los navegadores guardan ese archivo en caché hasta 7 días, así que los cambios tardarían en verse en cada dispositivo.
 
 ### Opción B: pegar el CSS completo
 
