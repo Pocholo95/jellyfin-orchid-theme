@@ -408,6 +408,22 @@ body:has(.itemDetailPage:not(.hide)) .backgroundContainer.withBackdrop {
   color: #f9a8d4 !important;
 }
 
+/* Active "watched" and "favorite" toggles: theme pink instead of Jellyfin red */
+.playstatebutton-icon-played,
+.ratingbutton-icon-withrating {
+  color: var(--orchid-pink) !important;
+}
+
+/* Episode list thumbnails */
+.listItemImage {
+  border-radius: var(--orchid-radius-sm) !important;
+  overflow: hidden;
+}
+.listItemImageButton:hover .listItemImageButton-icon {
+  background: var(--orchid-gradient) !important;
+  color: #fff !important;
+}
+
 .genres a,
 .itemGenres a,
 .itemMiscInfo a {
@@ -654,8 +670,21 @@ body:has(.itemDetailPage:not(.hide)) .backgroundContainer.withBackdrop {
   overflow: hidden;
   box-shadow: var(--orchid-glow) !important;
 }
-.MuiButtonGroup-grouped {
+/* One continuous gradient across the whole group (Play All + Shuffle) instead
+   of one per button, and square inner corners. The extra classes outrank the
+   header's rounded-button rule, since these toolbars live inside the AppBar. */
+.MuiButtonGroup-root.MuiButtonGroup-contained {
+  background: var(--orchid-gradient) !important;
+}
+.MuiButtonGroup-root .MuiButtonGroup-grouped.MuiButton-root {
   border-radius: 0 !important;
+}
+.MuiButtonGroup-root .MuiButtonGroup-grouped.MuiButton-containedPrimary {
+  background: transparent !important;
+}
+.MuiButtonGroup-root .MuiButtonGroup-grouped.MuiButton-containedPrimary:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  filter: none;
 }
 .MuiButtonGroup-grouped:not(:last-of-type) {
   border-color: rgba(255, 255, 255, 0.25) !important;
@@ -764,6 +793,30 @@ body:has(.itemDetailPage:not(.hide)) .backgroundContainer.withBackdrop {
 .MuiBadge-colorPrimary {
   background: var(--orchid-gradient) !important;
   color: #fff !important;
+}
+/* Neutral chips, e.g. the item count next to the library title */
+.MuiChip-filledDefault {
+  background: rgba(192, 132, 252, 0.18) !important;
+  color: var(--orchid-accent) !important;
+}
+
+/* Filter panel sections: blend into the menu instead of grey blocks */
+.MuiAccordion-root {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+.MuiAccordion-root::before {
+  background-color: var(--orchid-border) !important;
+}
+.MuiAccordionSummary-root:hover {
+  background: rgba(192, 132, 252, 0.08) !important;
+}
+.MuiAccordion-root.Mui-expanded .MuiAccordionSummary-root {
+  color: var(--orchid-accent) !important;
+}
+.MuiAccordionDetails-root {
+  background: rgba(0, 0, 0, 0.18) !important;
 }
 
 /* --------------------------------------------------------------------------
